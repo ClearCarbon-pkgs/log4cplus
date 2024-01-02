@@ -8,11 +8,11 @@
 # Source0 file verified with key 0xA8974FD444F9305C (vhaisman@gmail.com)
 #
 Name     : log4cplus
-Version  : 1.2.1
-Release  : 1
-URL      : https://github.com/log4cplus/log4cplus/releases/download/REL_1_2_1/log4cplus-1.2.1.tar.gz
-Source0  : https://github.com/log4cplus/log4cplus/releases/download/REL_1_2_1/log4cplus-1.2.1.tar.gz
-Source1  : https://github.com/log4cplus/log4cplus/releases/download/REL_1_2_1/log4cplus-1.2.1.tar.gz.sig
+Version  : 2.0.0
+Release  : 2
+URL      : https://github.com/log4cplus/log4cplus/releases/download/REL_2_0_0/log4cplus-2.0.0.tar.bz2
+Source0  : https://github.com/log4cplus/log4cplus/releases/download/REL_2_0_0/log4cplus-2.0.0.tar.bz2
+Source1  : https://github.com/log4cplus/log4cplus/releases/download/REL_2_0_0/log4cplus-2.0.0.tar.bz2.sig
 Summary  : log4cplus, C++ logging library
 Group    : Development/Tools
 License  : Apache-2.0
@@ -49,15 +49,15 @@ lib components for the log4cplus package.
 
 
 %prep
-%setup -q -n log4cplus
-cd %{_builddir}/log4cplus
+%setup -q -n log4cplus-2.0.0
+cd %{_builddir}/log4cplus-2.0.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1703092321
+export SOURCE_DATE_EPOCH=1704197846
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -97,7 +97,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1703092321
+export SOURCE_DATE_EPOCH=1704197846
 rm -rf %{buildroot}
 %make_install
 
@@ -109,6 +109,8 @@ rm -rf %{buildroot}
 /usr/include/log4cplus/appender.h
 /usr/include/log4cplus/asyncappender.h
 /usr/include/log4cplus/boost/deviceappender.hxx
+/usr/include/log4cplus/callbackappender.h
+/usr/include/log4cplus/clfsappender.h
 /usr/include/log4cplus/clogger.h
 /usr/include/log4cplus/config.hxx
 /usr/include/log4cplus/config/defines.hxx
@@ -124,11 +126,9 @@ rm -rf %{buildroot}
 /usr/include/log4cplus/helpers/fileinfo.h
 /usr/include/log4cplus/helpers/lockfile.h
 /usr/include/log4cplus/helpers/loglog.h
-/usr/include/log4cplus/helpers/logloguser.h
 /usr/include/log4cplus/helpers/pointer.h
 /usr/include/log4cplus/helpers/property.h
 /usr/include/log4cplus/helpers/queue.h
-/usr/include/log4cplus/helpers/sleep.h
 /usr/include/log4cplus/helpers/snprintf.h
 /usr/include/log4cplus/helpers/socket.h
 /usr/include/log4cplus/helpers/socketbuffer.h
@@ -137,20 +137,24 @@ rm -rf %{buildroot}
 /usr/include/log4cplus/helpers/timehelper.h
 /usr/include/log4cplus/hierarchy.h
 /usr/include/log4cplus/hierarchylocker.h
+/usr/include/log4cplus/initializer.h
 /usr/include/log4cplus/internal/cygwin-win32.h
 /usr/include/log4cplus/internal/env.h
 /usr/include/log4cplus/internal/internal.h
 /usr/include/log4cplus/internal/socket.h
 /usr/include/log4cplus/layout.h
+/usr/include/log4cplus/log4cplus.h
 /usr/include/log4cplus/log4judpappender.h
 /usr/include/log4cplus/logger.h
 /usr/include/log4cplus/loggingmacros.h
 /usr/include/log4cplus/loglevel.h
 /usr/include/log4cplus/mdc.h
+/usr/include/log4cplus/msttsappender.h
 /usr/include/log4cplus/ndc.h
 /usr/include/log4cplus/nteventlogappender.h
 /usr/include/log4cplus/nullappender.h
 /usr/include/log4cplus/qt4debugappender.h
+/usr/include/log4cplus/qt5debugappender.h
 /usr/include/log4cplus/socketappender.h
 /usr/include/log4cplus/spi/appenderattachable.h
 /usr/include/log4cplus/spi/factory.h
@@ -165,8 +169,7 @@ rm -rf %{buildroot}
 /usr/include/log4cplus/tchar.h
 /usr/include/log4cplus/thread/impl/syncprims-cxx11.h
 /usr/include/log4cplus/thread/impl/syncprims-impl.h
-/usr/include/log4cplus/thread/impl/syncprims-pthreads.h
-/usr/include/log4cplus/thread/impl/syncprims-win32.h
+/usr/include/log4cplus/thread/impl/syncprims-pmsm.h
 /usr/include/log4cplus/thread/impl/threads-impl.h
 /usr/include/log4cplus/thread/impl/tls.h
 /usr/include/log4cplus/thread/syncprims-pub-impl.h
@@ -178,9 +181,12 @@ rm -rf %{buildroot}
 /usr/include/log4cplus/win32consoleappender.h
 /usr/include/log4cplus/win32debugappender.h
 /usr/lib64/liblog4cplus.so
+/usr/lib64/liblog4cplusU.so
 /usr/lib64/pkgconfig/log4cplus.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/liblog4cplus-1.2.so.5
-/usr/lib64/liblog4cplus-1.2.so.5.1.6
+/usr/lib64/liblog4cplus-2.0.so.3
+/usr/lib64/liblog4cplus-2.0.so.3.1.2
+/usr/lib64/liblog4cplusU-2.0.so.3
+/usr/lib64/liblog4cplusU-2.0.so.3.1.2
